@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Boolean Table with Filters</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        #filter-checkboxes {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Filter Data</h2>
+
+<input type="checkbox" name="filterStatus" value="ISO " />
+<label for="filter_1">ISO</label>
+<input type="checkbox" name="filterStatus" value="AMCA" />
+<label for="filter_2">AMCA</label>
+<input type="checkbox" name="filterStatus" value="UL" />
+<label for="filter_3">UL</label>
+<table border="1" id="StatusTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>ISO</th>
+            <th>AMCA</th>
+            <th>UL</th>
+        </tr>
+        <tbody>
+            <tr class="ISO">
+                <td class="Name">Name1</td>
+                <td class="ISO">&#x2713;</td>
+                <td class="AMCA">&nbsp;</td>
+                <td class="UL">&nbsp;</td>
+            </tr>
+            <tr class="ISO AMCA">
+                <td class="Name">Name2</td>
+                <td class="ISO">&#x2713;</td>
+                <td class="AMCA">&#x2713;</td>
+                <td class="UL">&nbsp;</td>
+            </tr>
+            <tr class="ISO AMCA UL">
+                <td class="Name">Name3</td>
+                <td class="ISO">&#x2713;</td>
+                <td class="AMCA">&#x2713;</td>
+                <td class="UL">&#x2713;</td>
+            </tr>
+        </tbody>
+</table>
+<script>
+    // Function to filter the table based on selected checkboxes
+$("input[name='filterStatus']").change(function () {
+
+    var count1 = $("input[name='filterStatus']:checked").length;
+
+    $("#StatusTable>tbody> tr").each(function () {
+        var count2 = 0;
+        var row = $(this);
+        $("input[name='filterStatus']:checked").each(function () {
+            var inputVal = $(this).val();
+            if (row.find('.' + inputVal).html().indexOf("✓") >= 0) {
+                count2++;
+            }
+        });
+
+        if (count1 == count2) row.show();
+        else row.hide();
+    });
+});
+</script>
+
+</body>
+</html>
